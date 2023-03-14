@@ -29,14 +29,16 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+# 이러한 앱을 만들어서 웹페이지를 구성할겁니다.
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
+    'django.contrib.admin', #관리자
+    'django.contrib.auth', #인증, 로그인 시스템
+    'django.contrib.contenttypes', #서버 이미지, 영상 제공을 위한
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blog',
+    'single_pages',
 ]
 
 MIDDLEWARE = [
@@ -105,11 +107,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_L10N = True
+
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

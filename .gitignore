@@ -128,5 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# idea file
+# Pycharm Files
 .idea/
+
+# Django Files
+migrations/
