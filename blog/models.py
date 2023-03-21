@@ -15,3 +15,6 @@ class Post(models.Model):
     def __str__(self):
         return f'[{self.pk}] {self.title}' #: 앞에 키값이 나오고
         #return self.title 타이틀 값만
+
+    def get_absolute_url(self):
+        return f'/blog/{self.pk}/'
