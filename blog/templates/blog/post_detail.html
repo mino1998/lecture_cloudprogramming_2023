@@ -80,6 +80,10 @@
 
         <!-- Post Content -->
         <p>{{ post.content }}</p>
+        {% if post.file_upload %}
+          <a href="{{ post.file_upload.url }}" class="btn btn-outline-dark" role="button" download>Download</a>
+          {{ post.get_file_name }}
+        {% endif %}
         <hr>
 
         <!-- Comments Form -->

@@ -1,11 +1,12 @@
 from django.db import models
 
 # Create your models here.
-
+import os
 from django.db import models
 
 class Post(models.Model):
     title=models.CharField(max_length=30)
+    hook=models.TextField(default='')
     content=models.TextField()
     head_image=models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
     file_upload=models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
@@ -19,3 +20,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}/'
+
+    def get_file_name(self):
+        return os.path.basename(self.file_upload.name)
