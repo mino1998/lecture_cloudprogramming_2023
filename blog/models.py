@@ -35,7 +35,7 @@ class Post(models.Model):
     file_upload=models.FileField(upload_to='blog/files/%Y/%m/%d/', blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
-    author=models.ForeignKey(User, null=True, on_delete=models.SET_NULL) #user class가 없으니까 쟝고에 user라는 모델 불러올거에요~
+    author=models.ForeignKey(User, null=False, on_delete=models.CASCADE) #user class가 없으니까 쟝고에 user라는 모델 불러올거에요~
     #cascade는 계단식이라 사라지면 전부 사라지게 만든다 이말이에요
 
     category=models.ForeignKey(Category, null=True, blank=True, on_delete=models.SET_NULL) #기본 카테고리로 가던가, 카테고리 없음으로 가려면 set_null, 왜냐면 null 이 true니까
