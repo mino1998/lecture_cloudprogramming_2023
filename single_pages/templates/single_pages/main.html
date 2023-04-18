@@ -8,6 +8,12 @@
 <nav>
     <a href="/blog/">Blog</a>
 </nav>
-    <h1>메인 페이지입니다.</h1>
+    <h1>대문 페이지!</h1>
+    {% for post in recent_posts %}
+        <div>
+            <h2><a href="{{ post.get_absolute_url }}">{{ post.titile }} by {{ post.author }}</a></h2>
+            <p>{{ post.get_content_markdown | truncatewords_html:30 |safe }}</p>
+        </div>
+    {% endfor %}
 </body>
 </html>

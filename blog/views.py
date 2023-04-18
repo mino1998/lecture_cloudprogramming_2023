@@ -1,10 +1,10 @@
 import os.path
-
+from django.shortcuts import get_object_or_404
 from django.shortcuts import render, redirect
 from . models import Post, Category, Tag
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from .forms import CommentForm
 
 class PostCreate(LoginRequiredMixin,CreateView):
     model=Post
@@ -41,6 +41,7 @@ class PostDetail(DetailView):
         context=super(PostDetail, self).get_context_data()
         context['categories']=Category.objects.all() #모든 카테고리 목록을 다 넣어버림
         context['no_category_post_count']=Post.objects.filter(category=None).count() #카테고리가 없는 글들은 어떻게 처리할까? 카테고리가 None인 애들을 체크하자
+        context['comment_form']=CommentForm
         return context
 def categories_page(request, slug):
     if slug=='no-category':
@@ -79,6 +80,24 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
             raise PermissionError #아니면 return redirect('/blog/') 이렇게 넣어도 되지만, 예외적상황, 잘못된 상황이라면 에러코드로 표시하면 확인하기 편함->http status code
 
     template_name = "blog/post_form_update.html"
+
+def add_comment(request, pk):
+    if request.user.is_authenticated:
+        post=get_object_or_404(Post, pk=pk)
+
+        if request.method=='POST':
+            comment_form=CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment=comment_form.save(commit=False)
+                comment.post=post
+                comment.author=request.user
+                comment.save()
+                return redirect(comment.get_absolute_url())
+        else:
+            return redirect(post.get_absolute_url())
+    else:
+        raise PermissionError
+
 
 # def index(request):
 #     posts=Post.objects.all().order_by('-pk')  #created_at 넣으면 생성시간 순서대로겠지, -를 붙이면 내림차순이다.
