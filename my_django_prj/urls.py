@@ -18,12 +18,13 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
-
+#urlpatterns는 위에서 부터 아래로 차례로 매핑을 해보는 겁니다.
 urlpatterns = [
     path('blog/', include('blog.urls')),
     path('admin/', admin.site.urls),
+    path('markdownx/', include('markdownx.urls')),
+    path('accounts/', include('allauth.urls')),
     path('', include('single_pages.urls')),
-    path('markdownx/', include('markdownx.urls'))
 ]
 
 urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

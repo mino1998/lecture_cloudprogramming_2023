@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-)6zqj*&hkb1ntq%9wz(&+2#z=m)mhhj&molb4^ail5^7n$!rgk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,14 @@ INSTALLED_APPS = [
     'markdownx',
     'blog',
     'single_pages',
+    #allauth
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    #allauth 하단 있는건 옵션
+    'allauth.socialaccount.providers.google',
+
 ]
 
 MIDDLEWARE = [
@@ -52,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'my_django_prj.urls'
@@ -123,7 +132,8 @@ USE_TZ = False #우리 서버의 time을 쓸 것이다.
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT=os.path.join(BASE_DIR,"static")
+STATICFILES_STORAGE='whitenoise.storage.CompressedStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -133,3 +143,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR, '_media') ##베이스 디렉에다가 미디어 폴더를 만들거다.
 CRISPY_TEMPLATE_PACK='bootstrap4'
+
+# Authentication
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend'
+)
+SITE_ID = 2
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+LOGIN_REDIRECT_URL='/blog/'
