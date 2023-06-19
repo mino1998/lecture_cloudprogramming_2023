@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Youtube Bookmark Detail</title>
+</head>
+<body>
+    <div id="content">
+        <h1>{{ object.name }}</h1>
+
+        <ul>
+            <li>URL: <a href="{{ object.url }}">{{ object.url }}</a></li>
+        </ul>
+
+        <form method="post" action="{% url 'delete_bookmark' object.id %}">
+            {% csrf_token %}
+            <button type="submit">Delete Bookmark</button>
+        </form>
+    </div>
+</body>
+</html>

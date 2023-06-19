@@ -1,0 +1,397 @@
+{#<!DOCTYPE html>#}
+{#<html lang="ko">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Ecampus</title>#}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#        }#}
+{#        nav {#}
+{#            background-color: #f2f2f2;#}
+{#            padding: 10px;#}
+{#        }#}
+{#        nav a {#}
+{#            text-decoration: none;#}
+{#            color: #333;#}
+{#            font-weight: bold;#}
+{#        }#}
+{#        h1 {#}
+{#            color: #333;#}
+{#        }#}
+{#        .form-container {#}
+{#            max-width: 400px;#}
+{#            margin: 20px auto;#}
+{#            padding: 20px;#}
+{#            border: 1px solid #ccc;#}
+{#            background-color: #f9f9f9;#}
+{#        }#}
+{#        .form-group {#}
+{#            margin-bottom: 15px;#}
+{#        }#}
+{#        .form-group label {#}
+{#            display: block;#}
+{#            font-weight: bold;#}
+{#            margin-bottom: 5px;#}
+{#        }#}
+{#        .form-group input[type="text"],#}
+{#        .form-group input[type="password"] {#}
+{#            width: 100%;#}
+{#            padding: 10px;#}
+{#            border: 1px solid #ccc;#}
+{#            box-sizing: border-box; /* Adjust input box size */#}
+{#        }#}
+{#        .btn-login {#}
+{#            display: block;#}
+{#            width: 100%;#}
+{#            padding: 10px;#}
+{#            background-color: #4caf50;#}
+{#            color: #fff;#}
+{#            text-align: center;#}
+{#            text-decoration: none;#}
+{#            cursor: pointer;#}
+{#        }#}
+{#        .popup-container {#}
+{#            position: fixed;#}
+{#            top: 50%;#}
+{#            left: 50%;#}
+{#            transform: translate(-50%, -50%);#}
+{#            z-index: 999;#}
+{#        }#}
+{#        .popup {#}
+{#            width: 300px;#}
+{#            padding: 20px;#}
+{#            border: 1px solid #ccc;#}
+{#            background-color: #f2f2f2;#}
+{#        }#}
+{#        .popup-close {#}
+{#            position: absolute;#}
+{#            top: 5px;#}
+{#            right: 10px;#}
+{#            cursor: pointer;#}
+{#        }#}
+{#    </style>#}
+{#    <script>#}
+{#        function showPopup(message) {#}
+{#            var popupContainer = document.createElement('div');#}
+{#            popupContainer.className = 'popup-container';#}
+{#            var popup = document.createElement('div');#}
+{#            popup.className = 'popup';#}
+{#            var closeBtn = document.createElement('span');#}
+{#            closeBtn.className = 'popup-close';#}
+{#            closeBtn.innerHTML = '&times;';#}
+{#            closeBtn.addEventListener('click', function() {#}
+{#                popupContainer.remove();#}
+{#            });#}
+{#            popup.appendChild(closeBtn);#}
+{#            popup.innerHTML += message;#}
+{#            popupContainer.appendChild(popup);#}
+{#            document.body.appendChild(popupContainer);#}
+{#        }#}
+{#    </script>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>Ecampus</h1>#}
+{##}
+{#    <div class="form-container">#}
+{#        <form id="login-form">#}
+{#            <div class="form-group">#}
+{#                <label for="username">아이디</label>#}
+{#                <input type="text" id="username" name="username" required>#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <label for="password">비밀번호</label>#}
+{#                <input type="password" id="password" name="password" required>#}
+{#            </div>#}
+{#            <button type="submit" class="btn-login">로그인</button>#}
+{#            <br><br>#}
+{#            <button id="signup-btn">회원가입</button> <!-- Added Signup Button -->#}
+{#        </form>#}
+{#    </div>#}
+{##}
+{#    <script>#}
+{#        var form = document.getElementById('login-form');#}
+{#        form.addEventListener('submit', function(event) {#}
+{#            event.preventDefault(); // Prevent form submission#}
+{##}
+{#            // Get input values#}
+{#            var username = document.getElementById('username').value;#}
+{#            var password = document.getElementById('password').value;#}
+{##}
+{#            // Perform authentication#}
+{#            if (username === 'your_username' && password === 'your_password') {#}
+{#                window.location.href = '/blog/'; // Redirect to second app#}
+{#            } else {#}
+{#                showPopup('Authentication failed.'); // Show popup message#}
+{#            }#}
+{#        });#}
+{##}
+{#        var popupContainer = document.querySelector('.popup-container');#}
+{#        var popupCloseBtn = document.querySelector('.popup-close');#}
+{#        if (popupContainer && popupCloseBtn) {#}
+{#            popupCloseBtn.addEventListener('click', function() {#}
+{#                popupContainer.remove();#}
+{#            });#}
+{#        }#}
+{##}
+{#        var signupBtn = document.getElementById('signup-btn');#}
+{#        signupBtn.addEventListener('click', function() {#}
+{#            var popupContainer = document.querySelector('.popup-container');#}
+{#            if (!popupContainer) {#}
+{#                var popupContent = `#}
+{#                    <div class="popup">#}
+{#                        <span class="popup-close" onclick="this.parentElement.parentElement.remove()">&times;</span>#}
+{#                        <h2>회원가입</h2>#}
+{#                        <div class="form-group">#}
+{#                            <label for="signup-username">아이디</label>#}
+{#                            <input type="text" id="signup-username" name="signup-username">#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <label for="signup-password">비밀번호</label>#}
+{#                            <input type="password" id="signup-password" name="signup-password">#}
+{#                        </div>#}
+{#                        <button id="signup-submit">회원가입</button>#}
+{#                    </div>#}
+{#                `;#}
+{#                var popupContainer = document.createElement('div');#}
+{#                popupContainer.className = 'popup-container';#}
+{#                popupContainer.innerHTML = popupContent;#}
+{#                document.body.appendChild(popupContainer);#}
+{#            }#}
+{#        });#}
+{#    </script>#}
+{#</body>#}
+{#</html>#}
+
+{#<!DOCTYPE html>#}
+{#<html lang="ko">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Ecampus</title>#}
+{#    <style>#}
+{#        body {#}
+{#            font-family: Arial, sans-serif;#}
+{#        }#}
+{#        nav {#}
+{#            background-color: #f2f2f2;#}
+{#            padding: 10px;#}
+{#        }#}
+{#        nav a {#}
+{#            text-decoration: none;#}
+{#            color: #333;#}
+{#            font-weight: bold;#}
+{#        }#}
+{#        h1 {#}
+{#            color: #333;#}
+{#        }#}
+{#        .form-container {#}
+{#            max-width: 400px;#}
+{#            margin: 20px auto;#}
+{#            padding: 20px;#}
+{#            border: 1px solid #ccc;#}
+{#            background-color: #f9f9f9;#}
+{#        }#}
+{#        .form-group {#}
+{#            margin-bottom: 15px;#}
+{#        }#}
+{#        .form-group label {#}
+{#            display: block;#}
+{#            font-weight: bold;#}
+{#            margin-bottom: 5px;#}
+{#        }#}
+{#        .form-group input[type="text"],#}
+{#        .form-group input[type="password"] {#}
+{#            width: 100%;#}
+{#            padding: 10px;#}
+{#            border: 1px solid #ccc;#}
+{#            box-sizing: border-box; /* Adjust input box size */#}
+{#        }#}
+{#        .btn-login {#}
+{#            display: block;#}
+{#            width: 100%;#}
+{#            padding: 10px;#}
+{#            background-color: #4caf50;#}
+{#            color: #fff;#}
+{#            text-align: center;#}
+{#            text-decoration: none;#}
+{#            cursor: pointer;#}
+{#        }#}
+{#        .popup-container {#}
+{#            position: fixed;#}
+{#            top: 50%;#}
+{#            left: 50%;#}
+{#            transform: translate(-50%, -50%);#}
+{#            z-index: 999;#}
+{#        }#}
+{#        .popup {#}
+{#            width: 300px;#}
+{#            padding: 20px;#}
+{#            border: 1px solid #ccc;#}
+{#            background-color: #f2f2f2;#}
+{#        }#}
+{#        .popup-close {#}
+{#            position: absolute;#}
+{#            top: 5px;#}
+{#            right: 10px;#}
+{#            cursor: pointer;#}
+{#        }#}
+{#    </style>#}
+{#    <script>#}
+{#        function showPopup(message) {#}
+{#            var popupContainer = document.createElement('div');#}
+{#            popupContainer.className = 'popup-container';#}
+{#            var popup = document.createElement('div');#}
+{#            popup.className = 'popup';#}
+{#            var closeBtn = document.createElement('span');#}
+{#            closeBtn.className = 'popup-close';#}
+{#            closeBtn.innerHTML = '&times;';#}
+{#            closeBtn.addEventListener('click', function() {#}
+{#                popupContainer.remove();#}
+{#            });#}
+{#            popup.appendChild(closeBtn);#}
+{#            popup.innerHTML += message;#}
+{#            popupContainer.appendChild(popup);#}
+{#            document.body.appendChild(popupContainer);#}
+{#        }#}
+{#    </script>#}
+{#</head>#}
+{#<body>#}
+{#    <h1>My BookMark!</h1>#}
+{##}
+{#    <div class="form-container">#}
+{#        <form id="login-form" method="POST" action="{% url 'login' %}">#}
+{#            {% csrf_token %}#}
+{#            <div class="form-group">#}
+{#                <label for="username">아이디</label>#}
+{#                <input type="text" id="username" name="username" required>#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <label for="password">비밀번호</label>#}
+{#                <input type="password" id="password" name="password" required>#}
+{#            </div>#}
+{#            <button type="submit" class="btn-login">로그인</button>#}
+{#            <br><br>#}
+{#            <a href="{% url 'signup' %}">회원가입</a> <!-- Modified Signup Link -->#}
+{#        </form>#}
+{#    </div>#}
+{#</body>#}
+{#</html>#}
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookmark</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .btn-login {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #dc3545;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .popup-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+        }
+
+        .popup {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f2f2f2;
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function showPopup(message) {
+            var popupContainer = document.createElement('div');
+            popupContainer.className = 'popup-container';
+            var popup = document.createElement('div');
+            popup.className = 'popup';
+            var closeBtn = document.createElement('span');
+            closeBtn.className = 'popup-close';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.addEventListener('click', function () {
+                popupContainer.remove();
+            });
+            popup.appendChild(closeBtn);
+            popup.innerHTML += message;
+            popupContainer.appendChild(popup);
+            document.body.appendChild(popupContainer);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>My BookMark!</h1>
+
+    <div class="form-container">
+        <form id="login-form" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="username">아이디</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-login">로그인</button>
+            <br><br>
+            <a href="{% url 'signup' %}" class="btn btn-danger">회원가입</a>
+        </form>
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

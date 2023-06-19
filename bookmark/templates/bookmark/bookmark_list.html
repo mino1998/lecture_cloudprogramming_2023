@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Youtube Bookmark</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .thumbnail-image {
+            max-width: 100%;
+            height: auto;
+        }
+        .custom-box {
+        background-color: #FF0066;
+        border-radius: 10px;
+        padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="content" class="container mt-5">
+        <h1 class="mb-4">나의 Youtube Bookmark List</h1>
+        <div class="custom-box">
+        <h4 class="mb-4">URL은 유튜브 URL을, Thumbnail Image URL에는 https://i1.ytimg.com/vi/((여기!!))/mqdefault.jpg</h4>
+        <h4 class="mb-4">((여기!!)) 부분에는 유튜브 URL 중 v=~~~ 부분을 넣어주시면 됩니다. </h4>
+        <h4 class="mb-4">예시 : https://www.youtube.com/watch?v=bUQyXGBt_5k 에서는 bUQyXGBt_5k를 ((여기!!)) 에 넣기 </h4>
+        </div><br>
+        <form method="post" action="{% url 'create_bookmark' %}">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col-md-4">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="url">URL:</label>
+                    <input type="text" id="url" name="url" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <label for="thumbnail_image_url">Thumbnail Image URL:</label>
+                    <input type="text" id="thumbnail_image_url" name="thumbnail_image_url" class="form-control">
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Create Bookmark</button>
+        </form>
+        <br><br>
+        <div class="row">
+            {% for bookmark in object_list %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        {% if bookmark.thumbnail_image %}
+                            <img src="{{ bookmark.thumbnail_image.url }}" alt="Thumbnail Image" class="card-img-top thumbnail-image">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title"><a href="{% url 'detail' bookmark.id %}">{{ bookmark.name }}</a></h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {% if object_list.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ object_list.previous_page_number }}">Previous</a></li>
+                {% endif %}
+                {% for i in object_list.paginator.page_range %}
+                    {% if object_list.number == i %}
+                        <li class="page-item active"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if object_list.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ object_list.next_page_number }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-secondary float-right mt-3 mr-3">로그아웃</button>
+        <input type="hidden" name="next" value="{% url 'login' %}">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -5,6 +5,7 @@ from markdownx.utils import markdown
 # Create your models here.
 import os
 from django.db import models
+from django.core.files.base import ContentFile
 
 class Tag(models.Model):
     name=models.CharField(max_length=50)
@@ -68,3 +69,10 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return f'{self.post.get_absolute_url()}#comment-{self.pk}'
+
+
+from django.db import models
+from PIL import Image
+from io import BytesIO
+import requests
+

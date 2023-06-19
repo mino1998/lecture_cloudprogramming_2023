@@ -1,19 +1,188 @@
+{#<!DOCTYPE html>#}
+{#<html lang="ko">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Main</title>#}
+{#</head>#}
+{#<body>#}
+{#<nav>#}
+{#    <a href="/blog/">Ecampus</a>#}
+{#</nav>#}
+{#    <h1>Ecampus</h1>#}
+{##}
+{#</body>#}
+{#</html>#}
+
+{#    {% for post in recent_posts %}#}
+{#        <div>#}
+{#            <h2><a href="{{ post.get_absolute_url }}">{{ post.titile }} by {{ post.author }}</a></h2>#}
+{#            <p>{{ post.get_content_markdown | truncatewords_html:30 |safe }}</p>#}
+{#        </div>#}
+{#    {% endfor %}#}
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Main</title>
+    <title>Ecampus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        nav {
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+        h1 {
+            color: #333;
+        }
+        .form-container {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box; /* Adjust input box size */
+        }
+        .btn-login {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .popup-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+        }
+        .popup {
+            width: 300px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f2f2f2;
+        }
+        .popup-close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function showPopup(message) {
+            var popupContainer = document.createElement('div');
+            popupContainer.className = 'popup-container';
+            var popup = document.createElement('div');
+            popup.className = 'popup';
+            var closeBtn = document.createElement('span');
+            closeBtn.className = 'popup-close';
+            closeBtn.innerHTML = '&times;';
+            closeBtn.addEventListener('click', function() {
+                popupContainer.remove();
+            });
+            popup.appendChild(closeBtn);
+            popup.innerHTML += message;
+            popupContainer.appendChild(popup);
+            document.body.appendChild(popupContainer);
+        }
+    </script>
 </head>
 <body>
-<nav>
-    <a href="/blog/">Blog</a>
-</nav>
-    <h1>대문 페이지!</h1>
-    {% for post in recent_posts %}
-        <div>
-            <h2><a href="{{ post.get_absolute_url }}">{{ post.titile }} by {{ post.author }}</a></h2>
-            <p>{{ post.get_content_markdown | truncatewords_html:30 |safe }}</p>
+<h1>Ecampus</h1>
+
+<div class="form-container">
+    <form id="login-form">
+        <div class="form-group">
+            <label for="username">아이디</label>
+            <input type="text" id="username" name="username" required>
         </div>
-    {% endfor %}
+        <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn-login">로그인</button>
+        <br><br>
+        <button id="signup-btn">회원가입</button> <!-- Added Signup Button -->
+    </form>
+</div>
+
+<script>
+    var form = document.getElementById('login-form');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Get input values
+        var username = document.getElementById('username').value;
+        var password = document.getElementById('password').value;
+
+        // Perform authentication
+        if (username === 'your_username' && password === 'your_password') {
+            window.location.href = '/second_app/'; // Redirect to second app
+        } else {
+            showPopup('Authentication failed.'); // Show popup message
+        }
+    });
+
+    var signupBtn = document.getElementById('signup-btn');
+    signupBtn.addEventListener('click', function() {
+        var popupContainer = document.querySelector('.popup-container');
+        if (!popupContainer) {
+            var popupContent = `
+                <div class="popup">
+                    <span class="popup-close" onclick="this.parentElement.parentElement.remove()">&times;</span>
+                    <h2>회원가입</h2>
+                    <div class="form-group">
+                        <label for="signup-username">아이디</label>
+                        <input type="text" id="signup-username" name="signup-username">
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">비밀번호</label>
+                        <input type="password" id="signup-password" name="signup-password">
+                    </div>
+                    <div class="form-group">
+                        <label for="security-question">자신만의 문제</label>
+                        <input type="text" id="security-question" name="security-question">
+                    </div>
+                    <div class="form-group">
+                        <label for="security-answer">문제에 대한 답</label>
+                        <input type="text" id="security-answer" name="security-answer">
+                    </div>
+                    <button id="signup-submit">회원가입</button>
+                </div>
+            `;
+            var popupContainer = document.createElement('div');
+            popupContainer.className = 'popup-container';
+            popupContainer.innerHTML = popupContent;
+            document.body.appendChild(popupContainer);
+        }
+    });
+</script>
+
 </body>
 </html>
+
+
